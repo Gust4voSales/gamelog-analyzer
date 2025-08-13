@@ -1,3 +1,4 @@
+import { Injectable, Scope } from '@nestjs/common';
 import { Match } from '../../entities/match';
 import { BaseEvent, GameEvent, KillEvent, MatchEndEvent, MatchStartEvent, UnknownEvent, WorldKillEvent } from '../../types/game-event.types';
 
@@ -6,6 +7,7 @@ interface MatchesLogsParserExecuteOutput {
   parseErrors: string[]
 }
 
+@Injectable({ scope: Scope.REQUEST }) // each request has its own instance
 export class MatchesLogsParser {
   private static readonly EVENTS_PATTERNS_REGEX = {
     DATE: /^(\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}:\d{2}) - (.+)$/,
