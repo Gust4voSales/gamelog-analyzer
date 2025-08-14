@@ -1,13 +1,22 @@
 import { Controller, Get, Param, Delete } from '@nestjs/common';
 import { GetMatchRankingService } from '@/app/services/match/get-match-ranking.service';
 import { DeleteAllMatchesService } from '@/app/services/match/delete-all-matches.service';
+import { ListMatchesService, ListMatchesOutput } from '@/app/services/match/list-matches.service';
 
 @Controller('matches')
 export class MatchController {
   constructor(
     private readonly getMatchRankingService: GetMatchRankingService,
-    private readonly deleteAllMatchesService: DeleteAllMatchesService
+    private readonly deleteAllMatchesService: DeleteAllMatchesService,
+    private readonly listMatchesService: ListMatchesService
   ) { }
+
+  @Get()
+  async listMatches(): Promise<{ matches: ListMatchesOutput[] }> {
+    const matches = await this.listMatchesService.execute();
+
+    return { matches };
+  }
 
   @Get(':id/ranking')
   async getMatchRanking(@Param('id') matchId: string) {

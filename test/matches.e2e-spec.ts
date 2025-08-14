@@ -169,4 +169,66 @@ describe('MatchController (e2e)', () => {
       expect(bottomPlayer.bestStreak).toBe(1);
     });
   });
+
+  describe('/matches (GET)', () => {
+    it('should return empty array when no matches exist', async () => {
+      const response = await request(app.getHttpServer())
+        .get('/matches')
+        .expect(200);
+
+      expect(response.body).toHaveProperty('matches');
+      expect(Array.isArray(response.body.matches)).toBe(true);
+      expect(response.body.matches).toHaveLength(0);
+    });
+
+    it('should return list of matches', async () => {
+      // Create multiple matches with different data
+      await createMatchWithPlayers('match-1', [
+        { playerName: 'Alice', kills: 5, deaths: 2, bestStreak: 3, weaponStats: { AK47: 5 } },
+        { playerName: 'Bob', kills: 3, deaths: 4, bestStreak: 2, weaponStats: { M4A1: 3 } }
+      ]);
+
+      await createMatchWithPlayers('match-2', [
+        { playerName: 'Charlie', kills: 8, deaths: 1, bestStreak: 5, weaponStats: { AWP: 8 } }
+      ]);
+
+      const response = await request(app.getHttpServer())
+        .get('/matches')
+        .expect(200);
+
+      expect(response.body).toHaveProperty('matches');
+      expect(Array.isArray(response.body.matches)).toBe(true);
+      expect(response.body.matches).toHaveLength(2);
+
+      // Verify response structure for each match
+      response.body.matches.forEach((match: any) => {
+        expect(match).toHaveProperty('id');
+        expect(match).toHaveProperty('startTime');
+        expect(match).toHaveProperty('endTime');
+        expect(match).toHaveProperty('players');
+        expect(typeof match.id).toBe('string');
+        expect(typeof match.startTime).toBe('string');
+        expect(match.endTime === null || typeof match.endTime === 'string').toBe(true);
+        expect(Array.isArray(match.players)).toBe(true);
+
+        // Verify players structure
+        match.players.forEach((player: any) => {
+          expect(player).toHaveProperty('name');
+          expect(typeof player.name).toBe('string');
+        });
+      });
+
+      // Verify specific match data
+      const match1 = response.body.matches.find((m: any) => m.id === 'match-1');
+      const match2 = response.body.matches.find((m: any) => m.id === 'match-2');
+
+      expect(match1).toBeDefined();
+      expect(match1.players).toHaveLength(2);
+      expect(match1.players.map((p: any) => p.name).sort()).toEqual(['Alice', 'Bob']);
+
+      expect(match2).toBeDefined();
+      expect(match2.players).toHaveLength(1);
+      expect(match2.players[0].name).toBe('Charlie');
+    });
+  });
 });

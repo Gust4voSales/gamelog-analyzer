@@ -11,6 +11,8 @@ describe('GetMatchRankingService', () => {
   beforeEach(() => {
     mockMatchRepository = {
       findById: jest.fn(),
+      findAll: jest.fn(),
+      deleteAll: jest.fn(),
       createBatch: jest.fn(),
     };
 

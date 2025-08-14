@@ -28,6 +28,16 @@ export class PrismaMatchRepository implements MatchRepository {
     return MatchMapper.toDomain(match);
   }
 
+  async findAll(): Promise<Match[]> {
+    const matches = await this.prisma.match.findMany({
+      include: {
+        playerStats: true,
+      },
+    });
+
+    return matches.map(match => MatchMapper.toDomain(match));
+  }
+
   async createBatch(matches: Match[]): Promise<void> {
     let lastMatchId: string | null = null
     try {
