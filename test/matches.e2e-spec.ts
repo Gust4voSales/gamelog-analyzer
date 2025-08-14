@@ -64,8 +64,8 @@ describe('MatchController (e2e)', () => {
   describe('/matches/:id/ranking (GET)', () => {
     beforeEach(async () => {
       await createMatchWithPlayers('11348965', [
-        { playerName: 'Nick', kills: 3, deaths: 3, bestStreak: 2 },
-        { playerName: 'Roman', kills: 2, deaths: 3, bestStreak: 1 }
+        { playerName: 'Nick', kills: 3, deaths: 3, bestStreak: 2, weaponStats: { AK47: 3 } },
+        { playerName: 'Roman', kills: 2, deaths: 3, bestStreak: 1, weaponStats: { AK47: 2 } }
       ]);
     });
 
@@ -87,11 +87,15 @@ describe('MatchController (e2e)', () => {
         expect(player).toHaveProperty('kills');
         expect(player).toHaveProperty('deaths');
         expect(player).toHaveProperty('KDA');
+        expect(player).toHaveProperty('weaponsUsed');
+        expect(player).toHaveProperty('bestStreak');
         expect(typeof player.position).toBe('number');
         expect(typeof player.playerName).toBe('string');
         expect(typeof player.kills).toBe('number');
         expect(typeof player.deaths).toBe('number');
         expect(typeof player.KDA).toBe('number');
+        expect(typeof player.weaponsUsed).toBe('object');
+        expect(typeof player.bestStreak).toBe('number');
       });
 
       // Verify ranking order (Nick should be first with 3 kills, Roman second with 2 kills)
@@ -100,12 +104,16 @@ describe('MatchController (e2e)', () => {
       expect(response.body.ranking[0].kills).toBe(3);
       expect(response.body.ranking[0].deaths).toBe(3);
       expect(response.body.ranking[0].KDA).toBe(1);
+      expect(response.body.ranking[0].weaponsUsed).toEqual({ AK47: 3 });
+      expect(response.body.ranking[0].bestStreak).toBe(2);
 
       expect(response.body.ranking[1].playerName).toBe('Roman');
       expect(response.body.ranking[1].position).toBe(2);
       expect(response.body.ranking[1].kills).toBe(2);
       expect(response.body.ranking[1].deaths).toBe(3);
       expect(response.body.ranking[1].KDA).toBe(0.67);
+      expect(response.body.ranking[1].weaponsUsed).toEqual({ AK47: 2 });
+      expect(response.body.ranking[1].bestStreak).toBe(1);
     });
 
     it('should return 400 error for non-existent match', async () => {
@@ -121,9 +129,9 @@ describe('MatchController (e2e)', () => {
 
     it('should work with complex match data', async () => {
       await createMatchWithPlayers('complex-match', [
-        { playerName: 'TopPlayer', kills: 4, deaths: 1, bestStreak: 3 },
-        { playerName: 'MidPlayer', kills: 1, deaths: 2, bestStreak: 1 },
-        { playerName: 'BottomPlayer', kills: 1, deaths: 3, bestStreak: 1 }
+        { playerName: 'TopPlayer', kills: 4, deaths: 1, bestStreak: 3, weaponStats: { AK47: 3 } },
+        { playerName: 'MidPlayer', kills: 1, deaths: 2, bestStreak: 1, weaponStats: { AK47: 1 } },
+        { playerName: 'BottomPlayer', kills: 1, deaths: 3, bestStreak: 1, weaponStats: { AK47: 1 } }
       ]);
 
       const response = await request(app.getHttpServer())
@@ -139,6 +147,8 @@ describe('MatchController (e2e)', () => {
       expect(topPlayer.kills).toBe(4);
       expect(topPlayer.deaths).toBe(1);
       expect(topPlayer.KDA).toBe(4);
+      expect(topPlayer.weaponsUsed).toEqual({ AK47: 3 });
+      expect(topPlayer.bestStreak).toBe(3);
 
       // MidPlayer: 1 kill, 2 deaths, KDA = 0.5
       const midPlayer = response.body.ranking.find((p: any) => p.playerName === 'MidPlayer');
@@ -146,6 +156,8 @@ describe('MatchController (e2e)', () => {
       expect(midPlayer.kills).toBe(1);
       expect(midPlayer.deaths).toBe(2);
       expect(midPlayer.KDA).toBe(0.5);
+      expect(midPlayer.weaponsUsed).toEqual({ AK47: 1 });
+      expect(midPlayer.bestStreak).toBe(1);
 
       // BottomPlayer: 1 kill, 3 deaths, KDA = 0.33
       const bottomPlayer = response.body.ranking.find((p: any) => p.playerName === 'BottomPlayer');
@@ -153,6 +165,8 @@ describe('MatchController (e2e)', () => {
       expect(bottomPlayer.kills).toBe(1);
       expect(bottomPlayer.deaths).toBe(3);
       expect(bottomPlayer.KDA).toBe(0.33);
+      expect(bottomPlayer.weaponsUsed).toEqual({ AK47: 1 });
+      expect(bottomPlayer.bestStreak).toBe(1);
     });
   });
 });
