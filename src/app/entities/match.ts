@@ -22,6 +22,9 @@ export class Match extends BaseEntity<MatchProps> {
       playerStats: [],
     })
   }
+  static create(props: MatchProps): Match {
+    return new Match(props)
+  }
 
   // ====================================================================
   // getters

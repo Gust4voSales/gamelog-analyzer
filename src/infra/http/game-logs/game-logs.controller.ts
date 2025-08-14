@@ -1,6 +1,6 @@
 import { BadRequestException, Controller, Post, UploadedFile, UseInterceptors } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
-import { ProcessGameLogsService } from "../../../app/services/game-logs/process-game-logs-service";
+import { ProcessGameLogsService } from "@/app/services/game-logs/process-game-logs.service";
 import path from "node:path";
 
 @Controller("game-logs")

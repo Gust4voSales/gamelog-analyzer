@@ -25,6 +25,9 @@ export class PlayerStats extends BaseEntity<PlayerStatsProps> {
       bestStreak: 0,
     })
   }
+  static create(props: PlayerStatsProps): PlayerStats {
+    return new PlayerStats(props)
+  }
 
   // ====================================================================
   // getters
