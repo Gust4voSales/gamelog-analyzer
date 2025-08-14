@@ -53,4 +53,13 @@ export class PrismaMatchRepository implements MatchRepository {
       throw error
     }
   }
+
+  // 💀 
+  // Dangerous method.
+  // I created this method to help me test the application whenever I needed to upload a new log file I wouldn't need 
+  // to change the ids of the matches from the log file. Just delete all previous matches with this method.
+  // 💀
+  async deleteAll(): Promise<void> {
+    await this.prisma.match.deleteMany({});
+  }
 }
