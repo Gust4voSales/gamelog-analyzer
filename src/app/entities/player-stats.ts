@@ -6,7 +6,6 @@ interface PlayerStatsProps {
   deaths: number
   weaponsUsed: Map<string, number>
   bestStreak: number
-  // awards: Award[] // TODO enum
 }
 
 export class PlayerStats extends BaseEntity<PlayerStatsProps> {
@@ -52,8 +51,23 @@ export class PlayerStats extends BaseEntity<PlayerStatsProps> {
     return this.props.bestStreak
   }
 
+  get KDA() {
+    return this.props.deaths === 0 ? this.props.kills : Number((this.props.kills / this.props.deaths).toFixed(2))
+  }
+
   // ====================================================================
   // public methods
+
+  public reportStats() {
+    return {
+      playerName: this.props.playerName,
+      kills: this.props.kills,
+      deaths: this.props.deaths,
+      KDA: this.KDA,
+      bestStreak: this.props.bestStreak,
+      weaponsUsed: Object.fromEntries(this.props.weaponsUsed.entries())
+    }
+  }
 
   public addKill(weapon: string) {
     this.props.kills++

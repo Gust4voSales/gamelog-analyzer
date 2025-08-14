@@ -15,6 +15,7 @@ describe('PlayerStats', () => {
       expect(player.deaths).toBe(0)
       expect(player.weaponsUsed).toEqual(new Map())
       expect(player.bestStreak).toBe(0)
+      expect(player.KDA).toBe(0)
     })
   })
 
@@ -95,6 +96,65 @@ describe('PlayerStats', () => {
 
       // Assert
       expect(player.deaths).toBe(3)
+    })
+  })
+
+  describe('KDA', () => {
+    let player: PlayerStats
+
+    beforeEach(() => {
+      player = PlayerStats.createNewPlayerStats('TestPlayer')
+    })
+
+    it('should return kills when deaths is 0', () => {
+      // Arrange
+      player.addKill('AK47')
+      player.addKill('M4A1')
+      player.addKill('AWP')
+
+      // Assert
+      expect(player.KDA).toBe(3)
+    })
+
+    it('should calculate KDA correctly when deaths > 0', () => {
+      // Arrange
+      player.addKill('AK47')
+      player.addKill('M4A1')
+      player.addKill('M4A1')
+      player.addDeath()
+      player.addDeath()
+
+      // Assert
+      expect(player.KDA).toBe(1.5)
+    })
+  })
+
+  describe('reportStats', () => {
+    let player: PlayerStats
+
+    beforeEach(() => {
+      player = PlayerStats.createNewPlayerStats('TestPlayer')
+    })
+
+    it('should return complete stats object', () => {
+      // Arrange
+      player.addKill('AK47')
+      player.addKill('AK47')
+      player.addKill('M4A1')
+      player.addDeath()
+
+      // Act
+      const stats = player.reportStats()
+
+      // Assert
+      expect(stats).toEqual({
+        playerName: 'TestPlayer',
+        kills: 3,
+        deaths: 1,
+        KDA: 3,
+        bestStreak: 3,
+        weaponsUsed: { 'AK47': 2, 'M4A1': 1 }
+      })
     })
   })
 })

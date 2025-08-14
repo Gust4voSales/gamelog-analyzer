@@ -48,7 +48,7 @@ describe('GetMatchRankingService', () => {
         playerName: 'Player3',
         kills: 10,
         deaths: 1, // Same kills as Player1, but fewer deaths
-        weaponsUsed: new Map(),
+        weaponsUsed: new Map([['AK47', 10]]),
         bestStreak: 6,
       });
 
@@ -76,6 +76,8 @@ describe('GetMatchRankingService', () => {
         kills: 15,
         deaths: 3,
         KDA: 5,
+        weaponsUsed: {},
+        bestStreak: 8,
       });
 
       expect(result!.ranking[1]).toEqual({
@@ -84,6 +86,8 @@ describe('GetMatchRankingService', () => {
         kills: 10,
         deaths: 1,
         KDA: 10,
+        weaponsUsed: { "AK47": 10 },
+        bestStreak: 6,
       });
 
       expect(result!.ranking[2]).toEqual({
@@ -92,6 +96,8 @@ describe('GetMatchRankingService', () => {
         kills: 10,
         deaths: 2,
         KDA: 5,
+        weaponsUsed: {},
+        bestStreak: 5,
       });
     });
 
@@ -125,6 +131,8 @@ describe('GetMatchRankingService', () => {
         kills: 5,
         deaths: 0,
         KDA: 5,
+        weaponsUsed: {},
+        bestStreak: 5,
       });
     });
   });

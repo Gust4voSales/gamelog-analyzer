@@ -1,13 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { MatchRepository } from '../../repositories/match-repository';
 import { EntityNotFoundError } from '@/app/errors/entity-not-found';
+import { PlayerStats } from '@/app/entities/player-stats';
 
-export interface PlayerRanking {
-  position: number;
-  playerName: string;
-  kills: number;
-  deaths: number;
-  KDA: number;
+export interface PlayerRanking extends ReturnType<typeof PlayerStats.prototype.reportStats> {
+  position: number
 }
 
 export interface MatchRankingResponse {
@@ -27,12 +24,7 @@ export class GetMatchRankingService {
     }
 
     const sortedPlayers = match.playerStats
-      .map(player => ({
-        playerName: player.playerName,
-        kills: player.kills,
-        deaths: player.deaths,
-        KDA: player.deaths === 0 ? player.kills : Number((player.kills / player.deaths).toFixed(2))
-      }))
+      .map(player => player.reportStats())
       .sort((a, b) => {
         if (b.kills !== a.kills) {
           return b.kills - a.kills;
