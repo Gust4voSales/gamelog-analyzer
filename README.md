@@ -3,7 +3,7 @@
 GameLog Analyzer is a backend service that processes game log files to extract match data and player statistics. It provides RESTful APIs to upload game logs, retrieve match information, and generate player rankings. The application uses a clean architecture approach with domain entities, repositories, and services.
 
 
-## Features
+## ✨ Features
 
 - **Game Log Processing**: Upload and parse game log files (.log, .txt formats)
 - **Match Management**: Store and retrieve match data
@@ -11,7 +11,7 @@ GameLog Analyzer is a backend service that processes game log files to extract m
 - **Ranking System**: Generate global player rankings and match-specific rankings
 - **Testing**: Unit and end-to-end test suites
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 gamelog-analyzer/
@@ -33,17 +33,17 @@ gamelog-analyzer/
 ├── Dockerfile                 # Docker container definition
 ```
 
-### Database Schema
+### 🗄️ Database Schema
 <img src="ERD.svg" alt="Entity Relationship Diagram" height="500">
 
-## Installation & Setup
+## ⚙️ Installation & Setup
 
-### Prerequisites
+### 📋 Prerequisites
 
 - Node.js 18+ 
 - npm
 
-### Manual Setup
+### 🔧 Manual Setup
 
 1. **Clone the repository**
    ```bash
@@ -85,7 +85,7 @@ gamelog-analyzer/
 
 The application will be available at `http://localhost:3333`
 
-### Docker Setup
+### 🐳 Docker Setup
 
 The easiest way to build an run the application is using Docker Compose:
 
@@ -105,7 +105,7 @@ The easiest way to build an run the application is using Docker Compose:
 
 This will build the Docker image, set up the database, run migrations, and start the application automatically.
 
-## API Endpoints
+## 🌐 API Endpoints
 
 The application provides the following REST endpoints:
 
@@ -124,11 +124,7 @@ The application provides the following REST endpoints:
 ### Players
 - `GET /players/ranking` - Get global player ranking across all matches
 
-### Response Format
-
-All endpoints return JSON responses with appropriate HTTP status codes. Successful responses include the requested data, while errors return descriptive error messages.
-
-## API Testing with Insomnia
+## 🧪 API Testing with Insomnia
 
 An Insomnia REST client collection is provided for easy API testing:
 
@@ -136,9 +132,7 @@ An Insomnia REST client collection is provided for easy API testing:
 - **Import**: Open Insomnia → Import → Select the YAML file
 - **Base URL**: Configure the environment variable `baseURL` to `http://localhost:3333`
 
-The collection includes all available endpoints with proper request configurations and examples.
-
-## Sample Game Logs
+## 📝 Sample Game Logs
 
 The `game-logs-examples/` directory contains sample game log files for testing:
 
@@ -156,11 +150,11 @@ DD/MM/YYYY HH:mm:ss - Match [MATCH_ID] has ended
 
 Use these files to quickly test the upload functionality and see how the system processes game data.
 
-## Testing
+## 🧪 Testing
 
 The project includes comprehensive test suites:
 
-### Unit Tests
+### 🔬 Unit Tests
 ```bash
 # Run unit tests
 npm run test
@@ -169,7 +163,7 @@ npm run test
 npm run test:e2e
 ```
 
-### Database Management
+### 🗃️ Database Management
 ```bash
 # View database in Prisma Studio
 npx prisma studio
