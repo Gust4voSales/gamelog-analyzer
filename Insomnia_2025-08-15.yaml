@@ -1,0 +1,167 @@
+type: collection.insomnia.rest/5.0
+name: GameLogs-Analyzer
+meta:
+  id: wrk_40a81b4c4d0c4e2b91a141526c866905
+  created: 1755058831180
+  modified: 1755058831180
+  description: ""
+collection:
+  - name: matches
+    meta:
+      id: fld_83ef2d5f6d514c52a85b29dd97c2742f
+      created: 1755226742194
+      modified: 1755226807201
+      sortKey: -1755226791673
+      description: ""
+    children:
+      - url: "{{ _.baseURL }}/matches/11348965/ranking"
+        name: /matches/:id/ranking
+        meta:
+          id: req_abb0c3e0cbbb4c4281fa276cc650cd19
+          created: 1755140218976
+          modified: 1755226759503
+          isPrivate: false
+          description: ""
+          sortKey: -1755226755962
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.4.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseURL }}/matches/"
+        name: /matches/
+        meta:
+          id: req_22208987bb574ad2a431efbb00b6afed
+          created: 1755208587058
+          modified: 1755226755897
+          isPrivate: false
+          description: ""
+          sortKey: -1755226755862
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.4.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseURL }}/matches"
+        name: /matches/
+        meta:
+          id: req_d0a4dad24cbe4bb0aea61be672434c3c
+          created: 1755209813490
+          modified: 1755226761439
+          isPrivate: false
+          description: ""
+          sortKey: -1755226756062
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.4.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: players
+    meta:
+      id: fld_bd7a979e6c6a441ab68980f4a8116f83
+      created: 1755226781158
+      modified: 1755226781158
+      sortKey: -1755226781158
+      description: ""
+    children:
+      - url: "{{ _.baseURL }}/players/ranking"
+        name: /players/ranking
+        meta:
+          id: req_395300eb4de04b5cae5a36d31cd54682
+          created: 1755224168700
+          modified: 1755227028305
+          isPrivate: false
+          description: ""
+          sortKey: -1755227028273
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.4.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: game-logs
+    meta:
+      id: fld_d9c004c1e42a44e7a2991256b553c270
+      created: 1755226802188
+      modified: 1755227022399
+      sortKey: -1755226802188
+      description: ""
+    children:
+      - url: "{{ _.baseURL }}/game-logs/upload"
+        name: /game-logs/upload
+        meta:
+          id: req_8309eb3e9c1148c19ceb10aed65a9827
+          created: 1755058834668
+          modified: 1755226805250
+          isPrivate: false
+          description: ""
+          sortKey: -1755226805239
+        method: POST
+        body:
+          mimeType: multipart/form-data
+          params:
+            - id: pair_72f8976f867f43d099f59731b101d6fc
+              name: file
+              value: ""
+              description: ""
+              disabled: false
+              type: file
+              fileName: C:\Users\manoe\Documents\Projects\gamelog-analyzer\game-logs-examples\test-3-matches.log
+        headers:
+          - name: Content-Type
+            value: multipart/form-data
+            id: pair_2e23b6100a1341a0a65c51dba26579c0
+            disabled: false
+          - name: User-Agent
+            value: insomnia/11.4.0
+            id: pair_7cf8580c638b46109e16d338ffaa9222
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_952f137acc63a92404409b81572b2dcabf825df4
+    created: 1755058831184
+    modified: 1755058831184
+environments:
+  name: Base Environment
+  meta:
+    id: env_952f137acc63a92404409b81572b2dcabf825df4
+    created: 1755058831183
+    modified: 1755211757111
+    isPrivate: false
+  data:
+    baseURL: http://localhost:4444
