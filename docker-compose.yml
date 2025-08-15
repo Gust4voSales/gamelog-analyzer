@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  gamelog-analyzer:
+    build: .
+    ports:
+      - "${PORT}:${PORT}"
+    environment:
+      - NODE_ENV=${NODE_ENV:-production}
+      - PORT=${PORT}
+      - DATABASE_URL=${DATABASE_URL:-file:/app/data/prod.db}
+    volumes:
+      - gamelog_data:/app/data
+    restart: unless-stopped
+
+volumes:
+  gamelog_data:
